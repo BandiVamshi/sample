@@ -1,0 +1,700 @@
+1.)a.
+Procedure to Create a Git Local Repository and Commit a Web App
+Step 1: Create Your Web Application Folder
+bash
+Copy
+Edit
+mkdir my-web-app
+cd my-web-app
+You can add a simple file inside, like:
+
+bash
+Copy
+Edit
+echo "<h1>Hello, world!</h1>" > index.html
+Step 2: Initialize Git in Your Project Folder
+bash
+Copy
+Edit
+git init
+This command creates a .git folder — this is your local Git repository.
+
+Step 3: Configure Git (if not already configured)
+bash
+Copy
+Edit
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+Step 4: Add Files to the Staging Area
+bash
+Copy
+Edit
+git add .
+This adds all files in your project directory to Git's staging area.
+
+You can also use git add index.html to add specific files.
+
+Step 5: Commit the Files
+bash
+Copy
+Edit
+git commit -m "Initial commit - added index.html"
+This saves the snapshot of your project history.
+
+✅ Example in One Go:
+bash
+Copy
+Edit
+mkdir my-web-app
+cd my-web-app
+echo "<h1>Hello, Git!</h1>" > index.html
+git init
+git config --global user.name "Ramu"
+git config --global user.email "Ramu@example.com"
+git add .
+git commit -m "Initial commit with index.html"
+------------------------------------------------------------------------------------------------------------------------
+app.js
+const express = require('express');
+const axios = require("axios");
+const port = 3000;
+const app = express();
+app.set("view engine", 'ejs');
+app.get('/', async (req, res) => {
+  try {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+    const users = response.data;
+    res.render('table', { users });
+  }
+  catch (error) {
+    res.send('error fecthing');
+  }
+
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+----------------------------------------------------------------------------------------------------------------------------
+table.ejs
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>User Table</title>
+</head>
+
+<body>
+  <h2>User Data</h2>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>City</th>
+    </tr>
+    <% users.forEach(user=> { %>
+      <tr>
+        <td>
+          <%= user.id %>
+        </td>
+        <td>
+          <%= user.name %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+        <td>
+          <%= user.address.city %>
+        </td>
+      </tr>
+      <% }); %>
+  </table>
+</body>
+
+</html>
+----------------------------------------------------------------------------------------------------------------------------------------------
+2.) a
+const path = require("path");
+console.log("basename:", path.basename("/users/ram/desktop/file.txt"));
+console.log("joined path", path.join('/', 'users', 'ram', 'file.txt'));
+console.log("dirname", path.dirname("/users/ram/desktop/images"));
+console.log(path.resolve("/users/vamshi/desktop/go"));
+console.log("parse:", path.parse('/users/ram/file.js'));
+--------------------------------------------------------------------------------------------------------------------------
+b.)
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Fetch Example</title>
+</head>
+
+<body>
+  <h2>Posts</h2>
+  <div id="posts"></div>
+
+  <script>
+    async function loadPosts() {
+      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+      const posts = await res.json();
+
+      const container = document.getElementById('posts');
+
+      posts.slice(0, 5).forEach(post => {
+        container.innerHTML += `<h3>${post.title}</h3><p>${post.body}</p><hr>`;
+      });
+    }
+
+    loadPosts();
+  </script>
+</body>
+
+</html>
+----------------------------------------------------------------------------------------------------------------------------------------
+3.) a.)
+// Generator function for infinite Fibonacci sequence
+function* fibonacciGenerator() {
+  let a = 0, b = 1;
+
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b]; // Swap and update
+  }
+}
+
+// Create generator object
+const fib = fibonacciGenerator();
+
+// Print first 10 Fibonacci numbers
+for (let i = 0; i < 10; i++) {
+  console.log(fib.next().value);
+}
+----------------------------------------------------------------------------------------------------------------------------
+b.)
+const express = require('express');
+const jwt = require('jsonwebtoken');
+
+const app = express();
+app.use(express.json());
+
+const SECRET = 'ramu'; // secret key to sign token
+
+//  1. Get your token here
+app.post('/get-token', (req, res) => {
+  const token = jwt.sign({ user: 'ramu' }, SECRET);
+  res.send({ token });
+});
+
+//  2. Use your token here
+app.get('/secret', (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) return res.send('No token provided');
+
+  try {
+    jwt.verify(token, SECRET);
+    res.send(' Secret unlocked! Welcome ramu!');
+  } catch {
+    res.send(' Invalid token');
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
+});
+-------------------------------------------------------------------------------------------------------------------------------------
+4.) a.)
+//object destructuring
+const student = {
+  name: "ramu",
+  id: 20,
+  class: 10,
+  school: "DPS"
+
+}
+const { one, ...rest } = student;
+const { name: user, id: idno } = student;
+const { name, theme = "dark" } = student;
+console.log(theme);
+console.log(one);
+console.log(rest);
+console.log(user);
+console.log(idno);
+//array destructuring
+const arr = [1, 2, 3, 4, 5];
+const [, , third] = arr;
+console.log(third);
+let a = 1;
+let b = 2;
+[a, b] = [b, a];
+console.log(a);
+console.log(b);
+----------------------------------------------------------------------------------------------------------------------------
+b.)
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end('<h2>Hello ramu! This is HTML</h2>');
+  }
+
+  else if (req.url === '/json') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'This is JSON', name: 'ramu' }));
+  }
+
+  else if (req.url === '/text') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Just plain text here, ramu!');
+  }
+
+  else if (req.url === '/js') {
+    res.writeHead(200, { 'Content-Type': 'application/javascript' });
+    res.end('console.log("Hello from JavaScript, ramu!");');
+  }
+
+  else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found');
+  }
+});
+
+server.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
+});
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+5.) b.)
+1️⃣ factorial.js — (Default Export)
+js
+Copy
+Edit
+// factorial.js
+
+function factorial(n) {
+  if (n === 0 || n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+module.exports = factorial; // 👈 Default export
+2️⃣ fibonacci.js — (Default Export)
+js
+Copy
+Edit
+// fibonacci.js
+
+function fibonacci(n) {
+  const series = [0, 1];
+  for (let i = 2; i < n; i++) {
+    series[i] = series[i - 1] + series[i - 2];
+  }
+  return series.slice(0, n); // returns first n numbers
+}
+
+module.exports = fibonacci; // 👈 Default export
+3️⃣ app.js — Main file
+js
+Copy
+Edit
+// app.js
+
+const factorial = require('./factorial');   // default import
+const fibonacci = require('./fibonacci');   // default import
+
+const n = 5;
+
+console.log(`Factorial of ${n}:`, factorial(n));
+console.log(`Fibonacci series up to ${n}:`, fibonacci(n));
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+6.) a.)
+🔵 1. circle.js
+js
+Copy
+Edit
+// shapes/circle.js
+
+exports.area = (radius) => Math.PI * radius * radius;
+
+exports.perimeter = (radius) => 2 * Math.PI * radius;
+⬛ 2. square.js
+js
+Copy
+Edit
+// shapes/square.js
+
+exports.area = (side) => side * side;
+
+exports.perimeter = (side) => 4 * side;
+🟦 3. rectangle.js
+js
+Copy
+Edit
+// shapes/rectangle.js
+
+exports.area = (length, breadth) => length * breadth;
+
+exports.perimeter = (length, breadth) => 2 * (length + breadth);
+📌 4. app.js (Main File)
+js
+Copy
+Edit
+// app.js
+
+const circle = require('./shapes/circle');
+const square = require('./shapes/square');
+const rectangle = require('./shapes/rectangle');
+
+console.log('🔵 Circle (r = 5)');
+console.log('Area:', circle.area(5));
+console.log('Perimeter:', circle.perimeter(5));
+
+console.log('\n⬛ Square (side = 4)');
+console.log('Area:', square.area(4));
+console.log('Perimeter:', square.perimeter(4));
+
+console.log('\n🟦 Rectangle (l = 6, b = 3)');
+console.log('Area:', rectangle.area(6, 3));
+console.log('Perimeter:', rectangle.perimeter(6, 3));
+----------------------------------------------------------------------------------------------------------------------------------------------------
+6.b
+const fs = require('fs');
+const path = require('path');
+
+// 📌 Path Module Usage
+const folderPath = __dirname; // Gets current directory
+const fileName = 'demo.txt';
+
+// Creates a full path to the file
+const filePath = path.join(folderPath, fileName);
+
+console.log('🔍 Full File Path:', filePath);
+console.log('📄 File Name:', path.basename(filePath));
+console.log('📂 Folder Name:', path.dirname(filePath));
+console.log('📎 File Extension:', path.extname(filePath));
+
+// 📌 fs Module (Synchronous) Usage
+
+// 1️⃣ Write to a file (creates if not exists)
+fs.writeFileSync(filePath, 'Hello Ramu!\nThis is a test file.');
+console.log('✅ File written successfully');
+
+// 2️⃣ Read from the file
+const content = fs.readFileSync(filePath, 'utf8');
+console.log('\n📖 File Content:\n' + content);
+
+// 3️⃣ Append more content to the file
+fs.appendFileSync(filePath, '\nAdding another line for you!');
+console.log('✅ Content appended');
+
+// 4️⃣ Read updated content
+const newContent = fs.readFileSync(filePath, 'utf8');
+console.log('\n📖 Updated Content:\n' + newContent);
+
+// 5️⃣ Delete the file
+fs.unlinkSync(filePath);
+console.log('🗑️ File deleted successfully');
+-----------------------------------------------------------------------------------------------------------------------------------------
+7.) a.)
+function getData(dataId, getNextData) {
+  setTimeout(() => {
+    console.log("data is " + dataId);
+    if (getNextData) {
+      getNextData();
+    }
+  }, 2000);
+}
+//--------------Call Back Hell----------------
+getData(1, () => {
+  getData(2, () => {
+    getData(3);
+  });
+});
+-------------------------------------------------------------------------------------------------------------------------------
+8.) a.)
+// ✅ Function that returns a Promise
+function loginUser(username, password) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (username === 'ramu' && password === '1234') {
+        resolve('🎉 Login successful!');
+      } else {
+        reject('❌ Invalid credentials');
+      }
+    }, 1000); // simulating network delay
+  });
+}
+
+// ✅ Using Promises (then/catch)
+console.log('🔁 Trying login using .then()...');
+loginUser('ramu', '1234')
+  .then((msg) => console.log(msg))
+  .catch((err) => console.log(err));
+
+// ✅ Using Async/Await
+async function tryLogin() {
+  console.log('\n🔁 Trying login using async/await...');
+  try {
+    const result = await loginUser('ramu', 'wrong'); // wrong password
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+tryLogin();
+-----------------------------------------------------------------------------------------------------------------------------------------
+9.) a.)
+const os = require('os');
+const path = require('path');
+
+// ✅ OS MODULE DEMO
+console.log('📂 OS Module Demo');
+console.log('OS Type:', os.type());
+console.log('Platform:', os.platform());
+console.log('Architecture:', os.arch());
+console.log('CPU Cores:', os.cpus().length);
+console.log('Free Memory:', os.freemem());
+console.log('Total Memory:', os.totalmem());
+console.log('Home Directory:', os.homedir());
+console.log('Uptime (secs):', os.uptime());
+
+console.log('\n----------------------------\n');
+
+// ✅ PATH MODULE DEMO
+console.log(' Path Module Demo');
+
+const filePath = '/Users/ramu/Desktop/demo/file.txt';
+
+console.log('Directory Name:', path.dirname(filePath));
+console.log('Base Name:', path.basename(filePath));
+console.log('Extension:', path.extname(filePath));
+
+const joinedPath = path.join('folder', 'subfolder', 'file.txt');
+console.log('Joined Path:', joinedPath);
+
+const resolvedPath = path.resolve('folder', 'file.txt');
+console.log('Resolved Path:', resolvedPath);
+
+---------------------------------------------------------------------------------------------------------------------------------------
+10.) b.)
+// Brute-force method to print prime numbers from 1 to 100
+for (let num = 2; num <= 100; num++) {
+  let isPrime = true;
+
+  for (let i = 2; i < num; i++) {
+    if (num % i === 0) {
+      isPrime = false;
+      break;
+    }
+  }
+
+  if (isPrime) {
+    console.log(num);
+  }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+react app
+
+ 1. App.js
+jsx
+Copy
+Edit
+import React from 'react';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+
+function App() {
+  return (
+    <div>
+      <h1>React App</h1>
+      <Home name="Vamshi" />
+      <About />
+      <Contact />
+    </div>
+  );
+}
+
+export default App;
+🏠 2. Home.js
+jsx
+Copy
+Edit
+function Home(props) {
+  return (
+    <div>
+      <h2>Home</h2>
+      <p>Welcome, {props.name}!</p>
+    </div>
+  );
+}
+
+export default Home;
+ℹ️ 3. About.js
+jsx
+Copy
+Edit
+import React, { useState } from 'react';
+
+function About() {
+  const [year] = useState(2024);
+
+  return (
+    <div>
+      <h2>About</h2>
+      <p>This app was made in {year}.</p>
+    </div>
+  );
+}
+
+export default About;
+📞 4. Contact.js
+jsx
+Copy
+Edit
+import React, { useState } from 'react';
+
+function Contact() {
+  const [msg, setMsg] = useState('');
+
+  return (
+    <div>
+      <h2>Contact</h2>
+      <input
+        type="text"
+        placeholder="Type a message"
+        value={msg}
+        onChange={(e) => setMsg(e.target.value)}
+      />
+      <p>You wrote: {msg}</p>
+    </div>
+  );
+}
+
+export default Contact;
+--------------------------------------------------------------------------------------------------------------------
+📁 Folder Structure:
+pgsql
+Copy
+Edit
+users-crud/
+├── app.js
+├── models/
+│   └── User.js
+1️⃣ Install Required Packages
+bash
+Copy
+Edit
+npm init -y
+npm install express mongoose
+2️⃣ Create User Model — models/User.js
+js
+Copy
+Edit
+// models/User.js
+
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  doj: Date,
+  salary: Number,
+  department: String
+});
+
+module.exports = mongoose.model('User', userSchema);
+3️⃣ Create Express Server — app.js
+js
+Copy
+Edit
+// app.js
+
+const express = require('express');
+const mongoose = require('mongoose');
+const User = require('./models/User');
+
+const app = express();
+app.use(express.json());
+
+// 🔗 Connect to MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/userDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ DB Connection Error:', err));
+
+// ✅ CREATE User
+app.post('/users', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    const saved = await user.save();
+    res.status(201).json(saved);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 📄 READ all Users
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 📝 UPDATE User by ID
+app.put('/users/:id', async (req, res) => {
+  try {
+    const updated = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ❌ DELETE User by ID
+app.delete('/users/:id', async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Start server
+app.listen(3000, () => {
+  console.log('🚀 Server running at http://localhost:3000');
+});
+▶️ Run the Server
+Start MongoDB:
+
+bash
+Copy
+Edit
+mongod
+Start Node.js App:
+
+bash
+Copy
+Edit
+node app.js
+🧪 Example Requests
+👉 POST /users
+json
+Copy
+Edit
+{
+  "name": "Vamshi",
+  "doj": "2023-08-01",
+  "salary": 60000,
+  "department": "Development"
+}
+👉 GET /users — View all users
+👉 PUT /users/<id> — Update by ID
+👉 DELETE /users/<id> — Delete by ID
